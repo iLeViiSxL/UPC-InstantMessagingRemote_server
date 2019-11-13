@@ -1,5 +1,6 @@
 package facadeREST;
 
+import java.util.ArrayList;
 import util.Topic;
 import util.Topic_check;
 import java.util.List;
@@ -10,6 +11,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import publisher.Publisher;
 import util.Global;
 
 /**
@@ -21,40 +23,42 @@ import util.Global;
 @Stateless
 @Path("topicmanager")
 public class TopicManagerFacadeREST {
-  
-  @Inject
-  Global global;
 
-  @POST
-  @Path("addtopic")
-  @Consumes({"application/xml", "application/json"})
-  @Produces({"application/xml", "application/json"})
-  public void addPublisherToTopic(Topic topic) {
-    global.getTopicManager().addPublisherToTopic(topic);
-  }
+    @Inject
+    Global global;
 
-  @POST
-  @Path("removetopic")
-  @Consumes({"application/xml", "application/json"})
-  @Produces({"application/xml", "application/json"})
-  public void removePublisherFromTopic(Topic topic) {
-    global.getTopicManager().removePublisherFromTopic(topic);
-  }
+    @POST
+    @Path("addtopic")
+    @Consumes({"application/xml", "application/json"})
+    @Produces({"application/xml", "application/json"})
+    public Publisher addPublisherToTopic(Topic topic) {
+        System.out.println("Rest addPublisherToTopic : " + topic.name);
+        return global.getTopicManager().addPublisherToTopic(topic);
+    }
 
-  @POST
-  @Path("istopic")
-  @Consumes({"application/xml", "application/json"})
-  @Produces({"application/xml", "application/json"})
-  public Topic_check isTopic(Topic topic) {
-    return global.getTopicManager().isTopic(topic);
-  }
+    @POST
+    @Path("removetopic")
+    @Consumes({"application/xml", "application/json"})
+    @Produces({"application/xml", "application/json"})
+    public void removePublisherFromTopic(Topic topic) {
+        global.getTopicManager().removePublisherFromTopic(topic);
+    }
 
-  @GET
-  @Path("topics")
-  @Consumes({"application/xml", "application/json"})
-  @Produces({"application/xml", "application/json"})
-  public List<Topic> topics() {
-    return global.getTopicManager().topics();
-  }
+    @POST
+    @Path("istopic")
+    @Consumes({"application/xml", "application/json"})
+    @Produces({"application/xml", "application/json"})
+    public Topic_check isTopic(Topic topic) {
+        return global.getTopicManager().isTopic(topic);
+    }
+
+    @GET
+    @Path("topics")
+    @Consumes({"application/xml", "application/json"})
+    @Produces({"application/xml", "application/json"})
+    public List<Topic> topics() {
+        ArrayList<Topic> l = (ArrayList) global.getTopicManager().topics();
+        return global.getTopicManager().topics();
+    }
 
 }
